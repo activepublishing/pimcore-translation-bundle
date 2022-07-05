@@ -2,17 +2,17 @@ pimcore.registerNS("pimcore.object.elementservice.x");
 
 pimcore.object.elementservice.translateButton = function (id, fieldName, component, type, lang) {
     var provider = pimcore.globalmanager.get('translationBundle_provider');
-
-    return new Ext.Button({
-        iconCls: "pimcore_icon_translations",
-        cls: 'pimcore_button_transparent',
-        tooltip: t("translate_field"),
-        handler: function () {
-            handleTranslationRequest(id, fieldName, component, type, lang)
-        }.bind(this),
-        style: "margin-left: 10px; filter:grayscale(100%);",
-    });
-
+    if (!component.fieldConfig.noteditable) {
+        return new Ext.Button({
+            iconCls: "pimcore_icon_translations",
+            cls: 'pimcore_button_transparent',
+            tooltip: t("translate_field"),
+            handler: function () {
+                handleTranslationRequest(id, fieldName, component, type, lang)
+            }.bind(this),
+            style: "margin-left: 10px; filter:grayscale(100%);",
+        });
+    }
 };
 
 function handleTranslationRequest(id, fieldName, component, type, lang, formality) {
